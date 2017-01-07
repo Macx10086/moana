@@ -47,6 +47,9 @@ public class LoginController {
 	@RequestMapping("login")
 	@ResponseBody
 	public String login(String email,String password,HttpServletRequest request,HttpServletResponse response){
+		if(!loginerService.existsEmail(email)){
+			return "NoExists";
+		}
 		String pass=loginerService.getPassByEmail(email);
 		HttpSession session=request.getSession();
 		if(pass.equals(password)){

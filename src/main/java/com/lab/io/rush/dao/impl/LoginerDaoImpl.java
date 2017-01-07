@@ -1,5 +1,7 @@
 package com.lab.io.rush.dao.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -55,5 +57,16 @@ public class LoginerDaoImpl implements LoginerDao{
 		Path<String> e=root.get("email");
 		Predicate p=cb.equal(e,email);
 		return em.createQuery(cq.where(p)).getSingleResult();
+	}
+
+	@Override
+	public boolean existsEmail(String email) {
+		// TODO Auto-generated method stub
+		String l="select EMAIL from LOGINER ";
+		Query q=em.createNativeQuery(l);
+		
+		List<String> re= q.getResultList();
+		if(re==null||!re.contains(email)) return false;
+		return true;
 	}
 }

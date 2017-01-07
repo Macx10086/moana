@@ -12,4 +12,6 @@ public interface LoginerDao {
 	
 	public Loginer getLoginerByEmail(String email);
 
+	public boolean existsEmail(String email);
+
 }

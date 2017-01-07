@@ -8,4 +8,6 @@ public interface LoginerService {
 
 	String getPassByEmail(String email);
 
+	boolean existsEmail(String email);
+
 }

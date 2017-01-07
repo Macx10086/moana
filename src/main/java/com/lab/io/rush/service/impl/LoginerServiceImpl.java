@@ -24,4 +24,10 @@ public class LoginerServiceImpl implements LoginerService{
 		// TODO Auto-generated method stub
 		return loginerDao.getPassByEmail(email);
 	}
+
+	@Override
+	public boolean existsEmail(String email) {
+		// TODO Auto-generated method stub
+		return loginerDao.existsEmail(email);
+	}
 }

@@ -95,6 +95,9 @@ $("#loginButton").click(function(){
 			if(JSON.parse(data)=="false"){
 				alert("请检查密码和邮件地址是否匹配");
 			}
+			else 	if(JSON.parse(data)=="NoExists"){
+				alert("邮箱不存在");
+			}
 			else {
 				setCookie("username",JSON.parse(data));
 				window.location.href="http://139.199.164.23/moana/static/index.html";
