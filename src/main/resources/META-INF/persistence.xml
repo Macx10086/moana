@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+
+    <!-- JPA tutorial "unit" -->
+    <persistence-unit name="jpa.unit">
+     	<provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider> 
+        <class>com.lab.io.rush.pojo.TestPo</class> 
+        <class>com.lab.io.rush.pojo.Movie</class>
+        <class>com.lab.io.rush.pojo.Loginer</class>
+        <class>com.lab.io.rush.pojo.RushTicket</class>
+        <exclude-unlisted-classes/>
+        <properties>
+            <property name="datanucleus.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
+            <property name="datanucleus.ConnectionURL" value="jdbc:mysql://139.199.164.23:3306/movieRush"/>
+            <property name="datanucleus.ConnectionUserName" value="root"/>
+            <property name="datanucleus.ConnectionPassword" value="root"/>
+            <property name="datanucleus.schema.autoCreateAll" value="true"/>
+            <property name="datanucleus.schema.validateTables" value="false"/>
+            <property name="datanucleus.schema.validateConstraints" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>

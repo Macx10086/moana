@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>电影数据上传</title>
+<script type="text/javascript" src="139.199.164.23/js/jquery.min.js"></script>
+</head>
+<body>
+	<form action="http://139.199.164.23/moana/movieData/movieDataUpload.do" method="post">
+		<div style="padding-left:100px;">
+		<div style="margin-top:25px;">
+			<label>电影名称：</label>
+			<input name="name" />
+		</div>
+		<div style="margin-top:25px;">
+			<label>电影导演：</label>
+			<input name="director" />
+		</div>
+		<div style="margin-top:25px;">
+			<label>编剧:</label>
+			<input name="scenario">
+		</div>
+		<div style="margin-top:25px;">
+			<label>主演：</label>
+			<input name="protagonist">
+		</div>
+		<div style="margin-top:25px;">
+			<label>类型：</label>
+			<input name="type">
+		</div>
+		<div style="margin-top:25px;">
+			<label>上映日期：</label>
+			<input name="time">
+		</div>
+		<div style="margin-top:25px;">
+			<label>剧情简介：</label><br>
+			<textarea rows="5" cols="50" name="intro"></textarea>
+		</div>
+		<div style="margin-top:25px;">
+		<label>短评：</label><br>
+		<textarea rows="5" cols="50" name="assess"></textarea>
+		</div>
+		<div style="margin-top:25px;">
+			<label>评分：</label>
+		 	<input name="grade">
+		</div>
+		<div style="margin-top:25px;">
+			<label>海报地址：</label>
+			<input name="poster" alt="如果有多张海报，用分号隔开">
+		</div>
+		<div style="margin-top:25px;">
+			<label>可抢购数目：</label>
+			<input name="num">
+		</div>
+		<div style="margin-top:25px;"> 
+		 <input type="submit" value="提交">
+		</div>
+		</div>
+	</form>
+	
+</body>
+</html>

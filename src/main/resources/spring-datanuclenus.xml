@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:repository="http://www.springframework.org/schema/data/repository"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans    
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
+                        http://www.springframework.org/schema/tx 
+        				http://www.springframework.org/schema/tx/spring-tx.xsd
+        				http://www.springframework.org/schema/data/jpa
+        				http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        				http://www.springframework.org/schema/context    
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        				http://www.springframework.org/schema/data/repository
+        				http://www.springframework.org/schema/data/repository/spring-repository.xsd
+        				http://www.springframework.org/schema/task 
+       					http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        				"> 
+                        
+   
+   <!-- 引入redis -->
+    <context:property-placeholder location="classpath:redis.properties" />  
+  
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+        <property name="maxIdle" value="${redis.maxIdle}" />  
+        <property name="maxActive" value="${redis.maxActive}" />  
+        <property name="maxWait" value="${redis.maxWait}" />  
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
+    </bean>  
+      
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  
+        p:host-name="${redis.host}" p:port="${redis.port}" p:password="redis"  p:pool-config-ref="poolConfig"/>  
+      
+    <bean id="stringSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    <!-- 开启事务，可以通过transcational注解控制 -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="keySerializer" ref="stringSerializer" />
+    </bean>
+
+   
+                          
+    <!-- 自动扫描 -->  
+    <context:component-scan base-package="com.lab.io.rush" />  
+   
+   <jpa:repositories base-package="com.lab.io.rush.dao"  
+   entity-manager-factory-ref="entityManagerFactory" 
+ 	transaction-manager-ref="transactionManager"/>
+	<bean
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		id="entityManagerFactory">
+		<property name="persistenceUnitName" value="jpa.unit" />
+		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+		<property name="loadTimeWeaver">
+			<bean
+				class="org.springframework.instrument.classloading.SimpleLoadTimeWeaver" />
+		</property>
+	</bean>
+	
+
+	<bean class="org.springframework.orm.jpa.JpaTransactionManager"
+		id="transactionManager">
+		<constructor-arg ref="entityManagerFactory" />
+	</bean>
+
+	
+   
+   
+   <tx:annotation-driven transaction-manager="transactionManager" />
+   
+   
+   <!--调用任务  -->
+   	<task:annotation-driven/>
+   	<!--本来是是想要rmi远程调度的方式进行redis的持久化，但是太麻烦了  -->
+  <!-- <bean id="mobileAccountService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">  
+        <property name="serviceUrl" value="rmi://10.30.1.241:9990/MobileAccountService" />  
+        <property name="serviceInterface"  
+            value="com.spring.rmi.AccountService" />  
+    </bean>   -->
+ 				
+</beans>  
