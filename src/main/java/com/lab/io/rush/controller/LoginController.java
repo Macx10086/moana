@@ -55,7 +55,7 @@ public class LoginController {
 			response.addCookie(cookie);
 			return email; 
 		}
-		return email; 
+		return "false"; 
 		
 	}
 	/**
