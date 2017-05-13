@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>电影数据上传</title>
+<script type="text/javascript" src="139.199.164.23/js/jquery.min.js"></script>
+<link href="../css/bootstrap.css" rel='stylesheet' type='text/css' />
+</head>
+<body>
+	<form  class="layui-form">
+		<div class="layui-form-item" >
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>电影名称：</label>
+			<div class="layui-input-block">
+			<input id="name"  class="layui-input" style="width:250px;"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>电影导演：</label>
+			<div class="layui-input-block">
+			<input id="director"  class="layui-input" style="width:250px;"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>编剧:</label>
+			<div class="layui-input-block">
+			<input id="scenario" class="layui-input" style="width:250px;">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>主演：</label>
+			<div class="layui-input-block">
+			<input id="protagonist" class="layui-input" style="width:250px;">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>类型：</label>
+			<div class="layui-input-block">
+			<input id="type" class="layui-input" style="width:250px;">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>上映日期：</label>
+			<div class="layui-input-block">
+			<input id="time" class="layui-input" style="width:250px;">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"style="width:150px;"><span style="color:red;">*</span>剧情简介：</label><br>
+			<div class="layui-input-block">
+			<textarea  id="intro" class="layui-textarea" style="width:250px;"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+		<label class="layui-form-label" style="width:150px;" ><span style="color:red;">*</span>短评：</label><br>
+		<div class="layui-input-block">
+		<textarea  id="assess" class="layui-textarea" style="width:250px;"></textarea>
+		</div>
+		</div>
+		<div class="layui-form-item" >
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>评分：</label>
+			<div class="layui-input-block">
+		 	<input id="grade" class="layui-input" style="width:250px;">
+		 	</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>海报地址：</label>
+			<div class="layui-input-block">
+			<input id="poster"  class="layui-input" style="width:250px;">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>抢购时间：</label>
+			<div class="layui-input-block">
+			<input id="rushTime" type="datetime-local" class="layui-input" style="width:250px;">
+			</div>
+		</div>	
+		
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width:150px;"><span style="color:red;">*</span>可抢购数目：</label>
+			<div class="layui-input-block">
+			<input id="num" class="layui-input" style="width:250px;">
+			</div>
+		</div>	
+		
+	</form>
+	
+</body>
+<script src="../js/jquery-1.11.0.min.js"></script>
+<script src="../js/layui/layui.js"></script>
+<script src="../js/addMovie.js"></script>
+<script type="text/javascript">
+
+layui.use(['layer','laypage','form'], function(){
+	  var layer = layui.layer;
+	  var laypage = layui.laypage;
+	  var form = layui.form;
+	 
+
+	  
+	});
+	
+layui.link('../js/layui/css/layui.css');
+
+</script>
+</html>

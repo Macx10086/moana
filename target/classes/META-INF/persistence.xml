@@ -11,12 +11,13 @@
         <class>com.lab.io.rush.pojo.Movie</class>
         <class>com.lab.io.rush.pojo.Loginer</class>
         <class>com.lab.io.rush.pojo.RushTicket</class>
+        <class>com.lab.io.rush.pojo.Admin</class>
         <exclude-unlisted-classes/>
         <properties>
             <property name="datanucleus.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
-            <property name="datanucleus.ConnectionURL" value="jdbc:mysql://139.199.164.23:3306/movieRush"/>
+            <property name="datanucleus.ConnectionURL" value="jdbc:mysql://127.0.0.1:3306/movierush"/>
             <property name="datanucleus.ConnectionUserName" value="root"/>
-            <property name="datanucleus.ConnectionPassword" value="root"/>
+            <property name="datanucleus.ConnectionPassword" value="mysql"/>
             <property name="datanucleus.schema.autoCreateAll" value="true"/>
             <property name="datanucleus.schema.validateTables" value="false"/>
             <property name="datanucleus.schema.validateConstraints" value="false"/>

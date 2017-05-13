@@ -2,6 +2,7 @@ package com.lab.io.rush.dao.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,14 @@ public class RushTicketDaoImpl implements RushTicketDao{
 	@Transactional
 	public void save(RushTicket rushTicket){
 		em.persist(rushTicket);
+		
+	}
+
+	@Override
+	public void deleteMovie(String id) {
+		String sql = "delete from RUSHTICKET where mid="+id;
+		Query q = em.createNativeQuery(sql);
+		q.executeUpdate();
 		
 	}
 	

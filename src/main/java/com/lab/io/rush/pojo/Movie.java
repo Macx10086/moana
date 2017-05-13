@@ -1,21 +1,14 @@
 package com.lab.io.rush.pojo;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="movie")
@@ -39,6 +32,9 @@ public class Movie implements Serializable {
 	private String grade;//电影评分
 	private String poster;//电影海报
 	private int num;//电影票数目
+	private String rushTime;
+	
+	
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +49,14 @@ public class Movie implements Serializable {
 	}
 	public void setScenario(String scenario) {
 		this.scenario = scenario;
+	}
+	
+	
+	public String getRushTime() {
+		return rushTime;
+	}
+	public void setRushTime(String rushTime) {
+		this.rushTime = rushTime;
 	}
 	public String getProtagonist() {
 		return protagonist;

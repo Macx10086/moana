@@ -146,34 +146,48 @@ public class RedisServiceImpl  implements RedisService{
 	
 	
 	@Override
-	public String insertKeyIntoSet(int id, String email) {
+	public   String insertKeyIntoSet(int id, String email) {
 		// TODO Auto-generated method stub
 		String movieId="movie"+id;
-		boolean status=redisDao.existsKey(movieId);
-		if(status){
-			String num=redisDao.getValue(movieId);
-			if(num==null||num.equals("0")){
-				return "票已被抢完";
+//		redisDao.existsKey(movieId);
+		String num = "0"; 
+		try{
+			synchronized (this) {
+				 if(redisDao.watch(movieId).equals("no"))
+					 return "票已被抢完";
+				 
 			}
+//				if(status){
+					
+					
+					if(redisDao.existsKeyInSet("rushed", email+id)){
+						
+						return "一人只能抢一张票";
+					}
+					else {
+						boolean sis=redisDao.existsKeyInSet("rushMovie"+id, email);
+						if(sis) return "一人只能抢一张票";
+					}
+					boolean add=redisDao.addKey(movieId, (Integer.valueOf(num)-1)+"");
+					boolean sadd=redisDao.addSetKey("rushMovie"+id, email);
+					if(!sadd||!add) return "系统异常"; 
+					
+					return "您已成功抢到票，请到您注册的邮箱查看";
 			
-			if(redisDao.existsKeyInSet("rushed", email+id)){
-				
-				return "一人只能抢一张票";
-			}
-			else {
-				boolean sis=redisDao.existsKeyInSet("rushMovie"+id, email);
-				if(sis) return "一人只能抢一张票";
-			}
-			boolean sadd=redisDao.addSetKey("rushMovie"+id, email);
-			if(!sadd) return "系统异常"; 
-			redisDao.addKey(movieId, (Integer.valueOf(num)-1)+"");
-			
-			
-		}else{
-			String num=movieDao.getMovie(id).getNum()+"";
-			redisDao.addKey(movieId, num);
+		}catch(Exception e){
+			e.printStackTrace();
+			return "系统出错";
 		}
-		return "您已成功抢到票，请到您注册的邮箱查看";
+		
+			
+			
+			
+			
+//		}else{
+//			 num=movieDao.getMovie(id).getNum()+"";
+//			redisDao.addKey(movieId, num);
+//		}
+		
 		
 	}
 

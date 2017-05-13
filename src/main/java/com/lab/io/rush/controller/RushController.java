@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lab.io.rush.service.RedisService;
@@ -36,18 +37,20 @@ public class RushController {
 	 * @return: String
 	
 	 */
-	@RequestMapping("rushTicket")
+	@RequestMapping(value="rushTicket",method=RequestMethod.POST)
 	@ResponseBody
-	public String rushTicket(int id,HttpServletRequest request){
+	public String rushTicket(String id,String email,HttpServletRequest request){
 		HttpSession session=request.getSession();
-		String email=(String) session.getAttribute("username");
+//		email=(String) session.getAttribute("username");
 		String status="抢票失败";
 		try{
-			status=redisService.insertKeyIntoSet(id,email);
+			status=redisService.insertKeyIntoSet(Integer.valueOf(id),email);
 		}catch(Exception e){
 			return "error";
 		}
 		return status;
 		
 	}
+	
+
 }

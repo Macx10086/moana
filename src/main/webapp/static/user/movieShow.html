@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>电影抢购</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Vogue Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="../css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="../css/style.css" rel='stylesheet' type='text/css' />
+<script src="../js/jquery-1.11.0.min.js"></script>
+<script src="../js/imgHeight.js"></script>
+<!-- <link href='http://fonts.useso.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.useso.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'> -->
+<!---- start-smoth-scrolling---->
+<script type="text/javascript" src="../js/move-top.js"></script>
+<script type="text/javascript" src="../js/easing.js"></script>
+<style type="text/css">
+h1 {
+    font-family:"微软雅黑";
+    font-size:20px;
+    margin:20px 0;
+    border-bottom:solid 1px #ccc;
+    padding-bottom:20px;
+    letter-spacing:2px;
+}
+.time-item strong {
+    background:#C71C60;
+    color:#fff;
+    line-height:35px;
+    font-size:20px;
+    font-family:Arial;
+    padding:0 10px;
+    margin-right:10px;
+    border-radius:5px;
+    box-shadow:1px 1px 3px rgba(0,0,0,0.2);
+}
+#day_show {
+    float:left;
+    line-height:35px;
+    color:#c71c60;
+    font-size:20px;
+    margin:0 10px;
+    font-family:Arial,Helvetica,sans-serif;
+}
+.item-title .unit {
+    background:none;
+    line-height:49px;
+    font-size:24px;
+    padding:0 10px;
+    float:left;
+}
+
+</style>
+
+
+
+
+<script type="text/javascript">
+	function getQueryString(name){
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	     var r = window.location.search.substr(1).match(reg);
+	     if(r!=null)return  unescape(r[2]); return null;
+	}
+	
+	
+	
+	jQuery(document).ready(function($){
+		var id=getQueryString("id");
+		var url="../../movieData/showMovie.do?id="+id;
+		var html;
+		$.ajax({
+			url:url,
+			success:function(value){
+				if(value==null){
+					alert("该电影不存在");
+				}
+				
+				
+				var data=JSON.parse(value);
+			
+				$("#name").text(data["name"]);
+				$("#Name").text(data["name"]);
+				$("#id").text(data["id"]);
+				$("#director").text(data["director"]);
+				$("#scenario").text(data["scenario"]);
+				$("#protagonist").text(data["protagonist"]);
+				$("#type").text(data["type"]);
+				$("#grade").text(data["grade"]);
+				$("#time").text(data["time"]);
+				$("#num").text(data["num"]);
+				$("#intro").text(data["intro"]);
+				$("#assess").text(data["assess"]);
+				$("#poster").attr("src","../"+data["poster"]);
+				var rushTime = Math.round(new Date(data['rushTime'].split('.')[0]).getTime()/1000);
+				var now =  Math.round(Date.parse(new Date())/1000)
+				var timeDiff = rushTime - now;
+				if(timeDiff<0){
+					$('.caption').hide();
+
+				}else{
+				timer(timeDiff);		
+				}
+			}
+			
+					
+		});
+		var username=GetCookie("username")
+		if(username!=null){
+			$("#username span").text(username);
+			$("#loginOut,#username").css('display','inline-block');
+			
+			
+		}
+		/* setInterval(searchNum, 3000); */
+		/* requestAnimationFrame("searchTicketNum"); */
+		
+	});
+		
+</script>
+</head>
+<body>
+	<!--header-starts-->
+	<div class="header-bottom">
+	 <div class="fixed-header">
+		<div class="container">
+			
+			<div class="header-right">
+				<ul id="header">
+					<li><a href="login.html"><span class="qq"></span></a></li>
+					<li><a href="login.html"><span class="sina"></span></a></li>
+					<li style="display:none" id="username"><a href="javascript:void(0);" ><span ></span></a></li>
+					<li style="display:none" id="loginOut"><a href="javascript:void(0);" ><span >退出登录</span></a></li>
+				</ul>
+		
+			</div>
+			<div class="clearfix"></div>
+			
+		</div>
+	 </div>
+	 </div>
+	<!--header-ends-->
+<div class="blog" id="movieShow">
+	<div class="container">
+	    <div class="blog-top contact-top">
+	         <h3 id="Name"></h3>
+	
+	    </div>
+	    <div class="col-md-3 blog-left">
+	        <div class="blog-one blog-bottom"><a href="#"><img id="poster" alt="" /></a>
+	
+	        </div>
+	    </div>
+	    <div class="col-md-9 blog-right">
+	        <div class="categories">
+	
+	            <ul>
+	                <li >电影名称:<span id="name"></span></li>
+	                <li >导演:<span id="director"></span></li>
+	                <li >编剧:<span id="scenario"></span></li>
+	                <li >主演:<span id="protagonist"></span></li>
+	                <li >类型:<span id="type"></span></li>
+	                <li >评分:<span id="grade"></span></li>
+	                <li >上映日期:<span id="time"></span></li>
+	                <li >库存:<span style="color:red;" id="num"></span></li>
+	                <li id="id" style="display:none;"></li>
+	                <li>
+	                <div class="caption">
+							 		<div class="time-item">
+    					<span id="day_show">0天</span>
+					    <strong id="hour_show">0时</strong>
+					    <strong id="minute_show">0分</strong>
+					    <strong id="second_show">0秒</strong>
+						</div>
+							 		</div>	
+	                </li>
+	            </ul>
+	            
+	            <div class="b-btn"  >
+						<span><a href="javascript:void(0);" id="rushTicketButton" onclick="rushTicket()"><span id="buttonValue"  onclick="">抢票</span></a></span>
+				</div>
+	        </div>
+	    </div>
+	</div>
+	<div class="container" style="margin-top:30px;">
+	    <div class="blog-top contact-top">
+	         <h3>电影简介</h3>
+	
+	    </div>
+	    <div class="col-md-10 ">
+	        <p id="intro"></p>
+	    </div>
+	</div>
+	<div class="container" style="margin-top:30px;">
+	    <div class="blog-top contact-top">
+	         <h3>电影短评</h3>
+	
+	    </div>
+	    <div class="col-md-10 ">
+	        <p id="assess"></p>
+	    </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+		$(document).ready(function() {
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+		});
+</script>
+<a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<!-- 必须放在下面 -->
+<script type="text/javascript" src="../js/login.js"></script>
+<script type="text/javascript" src="../js/searchTicketNum.js"></script>
+<script type="text/javascript" src="../js/cookie.js"></script>
+<script src="../js/layui/layui.js"></script>
+<script src="../js/jquery.pagination.js"></script>
+
+<script type="text/javascript">
+
+layui.use(['layer','laypage','form'], function(){
+	  var layer = layui.layer;
+	  var laypage = layui.laypage;
+	  var form = layui.form;
+	 
+
+	  
+	});
+	
+layui.link('../js/layui/css/layui.css');
+
+</script>
+<script type="text/javascript">
+function  rushTicket(){
+	var id=$("#id").text();
+	$.ajax({
+		type:"POST",
+		url:"../../rush/rushTicket.do",
+		async:true,
+		data:{"id":id},
+		success:function(data){
+			layer.closeAll();
+			alert(data);
+		},
+		error:function(data){
+			layer.closeAll();
+			alert(data);
+		}
+	});
+	layer.open({
+		  type: 2,
+		  skin: 'layui-layer-rim', //加上边框
+		  area: ['800px', '600px'], //宽高
+		  content: 'wait.html',
+	});
+	
+}
+
+</script>
+</body>
+</html>

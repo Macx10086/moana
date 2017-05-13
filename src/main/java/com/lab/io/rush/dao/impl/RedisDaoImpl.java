@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,7 @@ public class RedisDaoImpl implements RedisDao{
     //super.setValue(((RedisOperations) value).opsForValue());就这一行代码  依靠一个editor
     @Resource(name = "redisTemplate")
     private ValueOperations<String, Object> vOps;
+    
     
     public boolean existsKey( final String key){
     	boolean status=template.execute(new RedisCallback<Boolean>() {
@@ -49,7 +51,7 @@ public class RedisDaoImpl implements RedisDao{
 				byte[] k=key.getBytes();
 				byte[] v=value.getBytes();
 				try{
-					connection.set(k, v);
+					connection.decr(k);
 				}catch(Exception e){
 					return false;
 					
@@ -184,13 +186,69 @@ public class RedisDaoImpl implements RedisDao{
 				byte[] dk=dstkey.getBytes();
 				byte[] sv=(value).getBytes();
 				byte[] dv=(value+id).getBytes();
-				connection.sRem(sk, sv);
+//				connection.sRem(sk, sv);
 				connection.sAdd(dk, dv);
 				return true;
 			}
 		});
 		return status;
 		
+	}
+
+	@Override
+	public String watch(final String key) {
+		String status=template.execute(new RedisCallback<String>() {
+
+			@Override
+			public String doInRedis(RedisConnection connection)
+					throws DataAccessException {
+				byte[] k = key.getBytes();
+//				connection.watch(k);
+				int num = Integer.valueOf(new String(connection.get(k)));
+				if(num<=0)
+						return "no";
+				return "yes";
+			}
+			
+		});
+		return status;
+	}
+
+	@Override
+	public String rushTicket(final int id, final String email) {
+		// TODO Auto-generated method stub
+		/*try{
+			String result = template.execute(new RedisCallback<String>(){
+
+				@Override
+				public String doInRedis(RedisConnection connection)
+						throws DataAccessException {
+					// TODO Auto-generated method stub
+					byte[] watchKey = ("movie"+id).getBytes();
+					connection.watch(watchKey);
+					connection.multi();
+					Integer num = Integer.valueOf(new String(template.opsForValue().get("movie"+id)));
+					if(num>0){
+						if(connection.sIsMember("rushed".getBytes(), (email+id).getBytes())){
+							return "一人只能抢一张票";
+						}
+						if(connection.sIsMember(("rushMovie"+id).getBytes(), email.getBytes())){
+							return "一人只能抢一张票";
+						}
+						connection.decr(watchKey);
+						connection.sAdd(("rushMovie"+id).getBytes(), email.getBytes());
+						connection.exec();
+					}
+					else return "票已被抢完";
+					return "您已成功抢到票";
+				}
+				
+			});
+		}catch(Exception e){
+			e.printStackTrace();
+			return "系统异常";
+		}*/
+		return "抢票失败";
 	}
 
 }

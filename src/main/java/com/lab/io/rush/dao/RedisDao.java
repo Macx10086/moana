@@ -12,4 +12,6 @@ public interface RedisDao {
 	 public Set<byte[]>setMembers(final String key);
 	 public boolean deleteValueInSet(final String key,final String value);
 	public boolean moveValueToRushed(final String srckey, final String dstkey, final String value, final int id);
+	public String watch(final String key);
+	public String rushTicket(final int id,final String email);
 }

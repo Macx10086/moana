@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+</head>
+<body>
+<div class="editInfo" >
+<form class="layui-form" action="">
+  <div class="layui-form-item">
+    <label class="layui-form-label">邮箱地址:</label>
+    <div class="layui-input-block">
+      <input type="text" id="email" disabled  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label"><span style="color:red;">*</span>密码:</label>
+    <div class="layui-input-inline">
+      <input type="password" id="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  
+</form>
+ 
+</div>
+
+
+</body>
+<script src="../js/jquery-1.11.0.min.js"></script>
+<script src="../js/editInfo.js"></script>
+<script src="../js/layui/layui.js"></script>
+
+
+<script type="text/javascript">
+layui.use(['layer','form'], function(){
+	  var layer = layui.layer;
+	  var form = layer.form;
+	  
+	});
+layui.link('../js/layui/css/layui.css');
+</script>
+</html>

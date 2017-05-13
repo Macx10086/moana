@@ -20,10 +20,7 @@ import com.lab.io.rush.service.MovieService;
  * 登录界面点击登录，写入session数据
  *
  */
-/**
- * @author Admin
- *
- */
+
 @RequestMapping("auth")
 @Controller
 public class LoginController {

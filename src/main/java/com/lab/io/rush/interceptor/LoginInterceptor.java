@@ -38,13 +38,13 @@ public class LoginInterceptor implements HandlerInterceptor{
         HttpSession session = request.getSession();  
         String username = (String)session.getAttribute("username");  
           
-        if(username != null){  
+//        if(username != null){  
             return true;  
-        }  
-        //不符合条件的，跳转到登录界面  
-        request.getRequestDispatcher("localhost:8080/moana/static/login.html").forward(request, response);  
-          
-        return false;  
+//        }  
+//        //不符合条件的，跳转到登录界面  
+//        request.getRequestDispatcher("localhost:8080/moana/static/user/login.html").forward(request, response);  
+//          
+//        return false;  
     }  
   
 }  

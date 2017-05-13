@@ -39,7 +39,7 @@ function delCookie(name)
 
 $("#loginOut").click(function(){
 	$.ajax({
-		url:"http://139.199.164.23/moana/auth/loginOut.do",
+		url:"../../auth/loginOut.do",
 		success:function(data){
 			if(JSON.parse(data)!="error"){
 				delCookie("username");
@@ -52,3 +52,36 @@ $("#loginOut").click(function(){
 	$("#loginOut").hide();
 	$("#username").hide();
 })
+
+
+function timer(intDiff){
+	intDiff = parseInt(intDiff);//倒计时总秒数量
+    window.setInterval(function(){
+    	
+    var day=0,
+        hour=0,
+        minute=0,
+        second=0;//时间默认值        
+    if(intDiff > 0){
+    	$('#buttonValue').text('该活动未开始');
+		$('#rushTicketButton').css('background','gray');
+		$('#rushTicketButton').attr("onclick","");
+        day = Math.floor(intDiff / (60 * 60 * 24));
+        hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+        minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+        second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+    }else{
+    	$('.caption').hide();
+    	$('#buttonValue').text('抢票');
+		$('#rushTicketButton').css('background','lightblue');
+		$('#rushTicketButton').attr("onclick","rushTicket();");
+    }
+    if (minute <= 9) minute = '0' + minute;
+    if (second <= 9) second = '0' + second;
+    $('#day_show').html(day+"天");
+    $('#hour_show').html('<s id="h"></s>'+hour+'时');
+    $('#minute_show').html('<s></s>'+minute+'分');
+    $('#second_show').html('<s></s>'+second+'秒');
+    intDiff--;
+    }, 1000);
+} 

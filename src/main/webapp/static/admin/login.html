@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>管理员登录</title>
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+      <link rel="stylesheet" href="../css/login.css">
+
+  
+</head>
+
+<body>
+  <div class="form">
+      
+      
+      <div class="tab-content"  >
+        <div id="login">   
+          <h1>管理员登录</h1>
+          
+          
+          
+            <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off" id="loginEmail"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Password<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off" id="loginPassword"/>
+          </div>
+          
+          <button class="button button-block" id="loginButton" id="loginButton">登录</button>
+          
+          
+
+        </div>
+        
+      </div><!-- tab-content -->
+      
+</div> <!-- /form -->
+  	<script src='../js/jquery-1.11.0.min.js'></script>
+	<script type="text/javascript" src="../js/cookie.js"></script>
+    <script src="../js/login.js"></script>
+	<script type="text/javascript">
+		function isEmail(str){
+		    var reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+		    return reg.test(str);
+		};
+		
+		$(document).ready(function(){
+			$('#login').show();
+		});
+		
+		$('#loginButton').click(function(){
+			var email = $('#loginEmail').val();
+			if(!isEmail(email)){
+				alert('请输入正确的邮箱!');
+				return ; 
+			}
+			var password = $('#loginPassword').val();
+			var url = '../../admin/login.do';
+			var param = {
+					'email' : email,
+					'password' : password,
+			};
+			$.post(url,param,function(resp){
+				var data  = JSON.parse(resp);
+				if(data.status==1){
+					location.href="index.html?user="+data.user;
+				}else{
+					alert('账号和密码不匹配，请重新输入');
+				}
+			})
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>登录注册</title>
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+      <link rel="stylesheet" href="../css/login.css">
+
+  
+</head>
+
+<body>
+  <div class="form">
+      
+      <ul class="tab-group">
+        <li class="tab active"><a href="#signup">注册</a></li>
+        <li class="tab"><a href="#login">登录</a></li>
+      </ul>
+      
+      <div class="tab-content">
+        <div id="signup">   
+          <h1>Sign Up for Free</h1>
+          
+         
+          
+         
+
+          <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off" id="registerEmail"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Set A Password<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off" id="registerPassword"/>
+          </div>
+          
+          <button  class="button button-block" id="registerButton">注册</button>
+          
+          
+
+        </div>
+        
+        <div id="login">   
+          <h1>Welcome Back!</h1>
+          
+          
+          
+            <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off" id="loginEmail"/>
+          </div>
+          
+          <div class="field-wrap">
+            <label>
+              Password<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off" id="loginPassword"/>
+          </div>
+          
+          <button class="button button-block" id="loginButton" id="loginButton">登录</button>
+          
+          
+
+        </div>
+        
+      </div><!-- tab-content -->
+      
+</div> <!-- /form -->
+  	<script src='../js/jquery-1.11.0.min.js'></script>
+	<script type="text/javascript" src="../js/cookie.js"></script>
+    <script src="../js/login.js"></script>
+	<script type="text/javascript">
+	function isEmail(str){
+	    var reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+	    return reg.test(str);
+	}
+
+	$("#registerButton").click(function(){
+		var email=document.getElementById("registerEmail").value;
+		if(!isEmail(email)) {
+			alert("邮箱格式错误，请检查后输入");
+			return ;
+		}
+		var password=document.getElementById("registerPassword").value;
+		var url="../../auth/register.do";
+		$.ajax({
+			type:'POST',
+			url:url,
+			data:{
+				email:email,
+				password:password
+			},
+			success:function(data){
+				if(JSON.parse(data)==="false"){
+					alert("请检查是否已注册!");
+				}
+				
+				alert("请登录");
+			},
+			error:(function(){
+				alert("请求失败");
+			})
+		})
+		
+	});
+
+	$("#loginButton").click(function(){
+		var email=document.getElementById("loginEmail").value;
+		if(!isEmail(email)) {
+			alert("邮箱格式错误，请检查后输入");
+			return ;
+		}
+		var password=document.getElementById("loginPassword").value;
+		var url="../../auth/login.do";
+		$.ajax({
+			type:'POST',
+			url:url,
+			data:{
+				email:email,
+				password:password
+			},
+			success:function(data){
+				if(JSON.parse(data)=="false"){
+					alert("请检查密码和邮件地址是否匹配");
+				}
+				else if(JSON.parse(data)=="NoExists"){
+					alert("邮箱不存在");
+				}
+				else {
+					setCookie("username",JSON.parse(data));
+					window.location.href="index.html";
+				}
+				
+			},
+			error:(function(){
+				alert("请求失败");
+			})
+		})
+		
+	});
+
+
+	
+	
+	</script>
+</body>
+</html>
